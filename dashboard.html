@@ -224,6 +224,33 @@
         </div>
     </div>
 
+    <!-- Confirmation Modal -->
+    <div id="confirmRedeemModal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4">
+        <div class="bg-white w-full max-w-md rounded-3xl shadow-2xl p-8 animate-fade-in">
+            <div class="text-center mb-6">
+                <div class="text-6xl mb-4"><i class="fas fa-question-circle text-yellow-600"></i></div>
+                <h2 class="text-2xl font-bold text-gray-800 mb-3">Confirm Redemption</h2>
+                <p class="text-gray-600 text-base">Are you ready to redeem this reward? Please show this to a staff member immediately after confirming.</p>
+            </div>
+            
+            <div class="bg-yellow-50 border-2 border-yellow-200 rounded-xl p-4 mb-6">
+                <p class="text-yellow-800 font-semibold text-sm flex items-center gap-2">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span>This action cannot be undone</span>
+                </p>
+            </div>
+            
+            <div class="flex gap-3">
+                <button onclick="cancelRedemption()" class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 py-3 rounded-xl font-semibold transition-all">
+                    Cancel
+                </button>
+                <button onclick="confirmRedemption()" class="flex-1 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white py-3 rounded-xl font-semibold transition-all flex items-center justify-center gap-2">
+                    <i class="fas fa-check"></i> Confirm
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Redeemed Reward Card Modal -->
     <div id="redeemedModal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4" onclick="closeRedeemedModal(event)">
         <div class="bg-white w-full max-w-md rounded-3xl shadow-2xl overflow-hidden" onclick="event.stopPropagation()">

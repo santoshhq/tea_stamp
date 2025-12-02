@@ -273,7 +273,10 @@ function closeRewardModal() {
     loadDashboard();
 }
 
-// Redeem reward
+// Store pending redemption index
+let pendingRedemptionIndex = null;
+
+// Redeem reward - show confirmation first
 function redeemReward(index) {
     // Validate index
     if (index === -1 || !currentUser.rewards || !currentUser.rewards[index]) {
@@ -289,17 +292,40 @@ function redeemReward(index) {
         return;
     }
     
+    // Store the index and show confirmation modal
+    pendingRedemptionIndex = index;
+    document.getElementById('confirmRedeemModal').classList.remove('hidden');
+}
+
+// Confirm redemption
+function confirmRedemption() {
+    if (pendingRedemptionIndex === null) return;
+    
     try {
-        const reward = rewardsManager.redeemReward(currentUser, index);
+        const reward = rewardsManager.redeemReward(currentUser, pendingRedemptionIndex);
         authManager.updateUser(currentUser);
         
-        // Show redeemed card modal instead of alert
+        // Hide confirmation modal
+        document.getElementById('confirmRedeemModal').classList.add('hidden');
+        
+        // Show redeemed card modal
         showRedeemedCard(reward);
         loadDashboard();
+        
+        // Reset pending index
+        pendingRedemptionIndex = null;
     } catch (error) {
         alert('❌ ' + error.message);
+        document.getElementById('confirmRedeemModal').classList.add('hidden');
+        pendingRedemptionIndex = null;
         loadDashboard();
     }
+}
+
+// Cancel redemption
+function cancelRedemption() {
+    document.getElementById('confirmRedeemModal').classList.add('hidden');
+    pendingRedemptionIndex = null;
 }
 
 // Show redeemed card modal
