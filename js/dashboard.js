@@ -28,15 +28,20 @@ function loadDashboard() {
     document.getElementById('userName').textContent = currentUser.name;
     document.getElementById('userMobile').textContent = currentUser.mobile;
     document.getElementById('currentStamps').textContent = currentUser.stamps;
-    document.getElementById('totalRewards').textContent = currentUser.rewardsEarned;
-    document.getElementById('rewardsCount').textContent = currentUser.rewardsEarned;
+    document.getElementById('currentStampsLarge').textContent = currentUser.stamps;
     
-    // Total stamps collected
-    document.getElementById('totalStampsCollected').textContent = currentUser.totalStamps || 0;
+    // Set user initial
+    const initial = currentUser.name.charAt(0).toUpperCase();
+    document.getElementById('userInitial').textContent = initial;
+    
+    // Top bar stats
+    document.getElementById('totalRewardsTop').textContent = currentUser.rewardsEarned;
+    document.getElementById('totalStampsTop').textContent = currentUser.totalStamps || 0;
     
     // Format join date
     const joinDate = new Date(currentUser.joinedDate);
-    document.getElementById('joinDate').textContent = joinDate.toLocaleDateString('en-IN', { month: 'short', year: 'numeric' });
+    const joinDateShort = joinDate.toLocaleDateString('en-IN', { month: 'short', year: 'numeric' });
+    document.getElementById('joinDateTop').textContent = joinDateShort;
     
     // Update progress bar
     const progress = stampManager.getProgress(currentUser);
