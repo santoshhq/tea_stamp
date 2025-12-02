@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chai Rewards • Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+        .logo-placeholder {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: white;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body class="bg-gradient-to-br from-[#faf6f0] to-[#f5e6d3] min-h-screen flex flex-col items-center justify-center px-4 py-10">
+
+    <div class="animate-fade-in w-full max-w-md">
+        <!-- Logo -->
+        <div class="w-24 h-24 mx-auto rounded-full shadow-lg mb-4 logo-placeholder">
+            ☕
+        </div>
+
+        <h1 class="text-3xl md:text-4xl font-bold text-[#5a3f2e] text-center">Welcome to Chai Rewards</h1>
+        <p class="text-sm md:text-base text-gray-600 mb-8 text-center">Earn stamps and unlock rewards</p>
+
+        <div class="w-full bg-white p-6 md:p-8 rounded-2xl shadow-2xl">
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <label class="text-gray-700 text-sm font-medium block mb-2">Enter Mobile Number</label>
+                <input 
+                    type="tel" 
+                    id="mobileNumber"
+                    maxlength="10"
+                    class="w-full p-3 md:p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-yellow-500 focus:border-transparent outline-none text-base transition-all"
+                    placeholder="9876543210"
+                    required>
+                
+                <div id="errorMessage" class="hidden mt-2 p-3 bg-red-50 border border-red-200 rounded-lg text-red-600 text-sm"></div>
+
+                <button
+                    type="submit"
+                    class="w-full mt-6 bg-gradient-to-r from-yellow-600 to-yellow-700 hover:from-yellow-700 hover:to-yellow-800 text-white py-3 md:py-4 rounded-xl font-semibold text-base md:text-lg shadow-lg transition-all transform hover:scale-[1.02] active:scale-[0.98]">
+                    Continue
+                </button>
+
+                <p class="text-center text-sm md:text-base mt-6 text-gray-700">
+                    New Customer?
+                    <a href="register.html" class="text-yellow-700 font-semibold hover:text-yellow-800 hover:underline">Register Here</a>
+                </p>
+            </form>
+        </div>
+
+        <div class="mt-6 text-center text-xs md:text-sm text-gray-600">
+            <p>Collect 7 stamps and get a free chai! ☕</p>
+        </div>
+    </div>
+
+<script>
+// Initialize localStorage if not exists
+if (!localStorage.getItem('users')) {
+    localStorage.setItem('users', JSON.stringify([]));
+}
+
+function handleLogin(event) {
+    event.preventDefault();
+    
+    const mobileInput = document.getElementById('mobileNumber');
+    const mobile = mobileInput.value.trim();
+    const errorDiv = document.getElementById('errorMessage');
+    
+    // Validate mobile number
+    if (!/^[6-9]\d{9}$/.test(mobile)) {
+        showError('Please enter a valid 10-digit mobile number starting with 6-9');
+        return;
+    }
+    
+    // Check if user exists
+    const users = JSON.parse(localStorage.getItem('users') || '[]');
+    const user = users.find(u => u.mobile === mobile);
+    
+    if (!user) {
+        showError('Mobile number not registered. Please register first.');
+        setTimeout(() => {
+            window.location.href = 'register.html';
+        }, 2000);
+        return;
+    }
+    
+    // Save current user session
+    localStorage.setItem('currentUser', JSON.stringify(user));
+    
+    // Show success and redirect
+    mobileInput.disabled = true;
+    document.querySelector('button[type="submit"]').textContent = 'Logging in...';
+    
+    setTimeout(() => {
+        window.location.href = 'dashboard.html';
+    }, 500);
+}
+
+function showError(message) {
+    const errorDiv = document.getElementById('errorMessage');
+    errorDiv.textContent = message;
+    errorDiv.classList.remove('hidden');
+    
+    setTimeout(() => {
+        errorDiv.classList.add('hidden');
+    }, 5000);
+}
+
+// Only allow numbers
+document.getElementById('mobileNumber').addEventListener('input', function(e) {
+    this.value = this.value.replace(/[^0-9]/g, '');
+});
+</script>
+
+</body>
+</html>

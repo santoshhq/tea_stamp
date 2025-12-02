@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chai Rewards • Register</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+        .user-placeholder {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+        }
+    </style>
+</head>
+
+<body class="bg-gradient-to-br from-[#fdf7ee] to-[#f5e6d3] min-h-screen flex flex-col items-center justify-center px-4 py-10">
+
+    <div class="animate-fade-in w-full max-w-md">
+        <div class="w-20 h-20 mx-auto rounded-full shadow-lg mb-4 user-placeholder">
+            👤
+        </div>
+
+        <h1 class="text-3xl md:text-4xl font-bold text-[#5a3f2e] text-center">Create Account</h1>
+        <p class="text-sm md:text-base text-gray-600 mb-6 text-center">Join our loyalty program</p>
+
+        <div class="w-full bg-white p-6 md:p-8 rounded-2xl shadow-2xl">
+            <form id="registerForm" onsubmit="handleRegister(event)">
+                <label class="text-gray-700 text-sm font-medium">Full Name</label>
+                <input 
+                    type="text"
+                    id="fullName"
+                    class="input_field" 
+                    placeholder="Enter your full name"
+                    required
+                    minlength="2">
+
+                <label class="label">Mobile Number</label>
+                <input 
+                    type="tel"
+                    id="mobileNumber"
+                    class="input_field" 
+                    maxlength="10" 
+                    placeholder="9876543210"
+                    required>
+
+                <label class="label">Age</label>
+                <input 
+                    type="number" 
+                    id="age"
+                    class="input_field" 
+                    placeholder="18"
+                    min="13"
+                    max="120"
+                    required>
+
+                <label class="label">Gender</label>
+                <select id="gender" class="input_field" required>
+                    <option value="">Select</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select>
+
+                <div id="errorMessage" class="hidden mt-4 p-3 bg-red-50 border border-red-200 rounded-lg text-red-600 text-sm"></div>
+                <div id="successMessage" class="hidden mt-4 p-3 bg-green-50 border border-green-200 rounded-lg text-green-600 text-sm"></div>
+
+                <button
+                    type="submit"
+                    class="w-full mt-6 bg-gradient-to-r from-yellow-600 to-yellow-700 hover:from-yellow-700 hover:to-yellow-800 text-white py-3 md:py-4 rounded-xl font-semibold text-base md:text-lg shadow-lg transition-all transform hover:scale-[1.02] active:scale-[0.98]">
+                    Register
+                </button>
+
+                <p class="text-center text-sm md:text-base mt-6 text-gray-700">
+                    Already have an account?
+                    <a href="index.html" class="text-yellow-700 font-semibold hover:text-yellow-800 hover:underline">Login Here</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+<script>
+function handleRegister(event) {
+    event.preventDefault();
+    
+    const name = document.getElementById('fullName').value.trim();
+    const mobile = document.getElementById('mobileNumber').value.trim();
+    const age = parseInt(document.getElementById('age').value);
+    const gender = document.getElementById('gender').value;
+    
+    // Validate inputs
+    if (name.length < 2) {
+        showError('Please enter a valid name (at least 2 characters)');
+        return;
+    }
+    
+    if (!/^[6-9]\d{9}$/.test(mobile)) {
+        showError('Please enter a valid 10-digit mobile number starting with 6-9');
+        return;
+    }
+    
+    if (age < 13 || age > 120) {
+        showError('Please enter a valid age between 13 and 120');
+        return;
+    }
+    
+    if (!gender) {
+        showError('Please select your gender');
+        return;
+    }
+    
+    // Check if mobile already exists
+    const users = JSON.parse(localStorage.getItem('users') || '[]');
+    
+    if (users.find(u => u.mobile === mobile)) {
+        showError('This mobile number is already registered. Please login.');
+        setTimeout(() => {
+            window.location.href = 'index.html';
+        }, 2000);
+        return;
+    }
+    
+    // Create new user
+    const newUser = {
+        id: Date.now().toString(),
+        name: name,
+        mobile: mobile,
+        age: age,
+        gender: gender,
+        stamps: 0,
+        rewardsEarned: 0,
+        history: [],
+        joinedDate: new Date().toISOString()
+    };
+    
+    users.push(newUser);
+    localStorage.setItem('users', JSON.stringify(users));
+    
+    // Show success message
+    showSuccess('Registration successful! Redirecting to login...');
+    
+    // Disable form
+    document.getElementById('registerForm').querySelectorAll('input, select, button').forEach(el => {
+        el.disabled = true;
+    });
+    
+    // Redirect to login
+    setTimeout(() => {
+        window.location.href = 'index.html';
+    }, 2000);
+}
+
+function showError(message) {
+    const errorDiv = document.getElementById('errorMessage');
+    const successDiv = document.getElementById('successMessage');
+    
+    successDiv.classList.add('hidden');
+    errorDiv.textContent = message;
+    errorDiv.classList.remove('hidden');
+    
+    setTimeout(() => {
+        errorDiv.classList.add('hidden');
+    }, 5000);
+}
+
+function showSuccess(message) {
+    const errorDiv = document.getElementById('errorMessage');
+    const successDiv = document.getElementById('successMessage');
+    
+    errorDiv.classList.add('hidden');
+    successDiv.textContent = message;
+    successDiv.classList.remove('hidden');
+}
+
+// Only allow numbers in mobile field
+document.getElementById('mobileNumber').addEventListener('input', function(e) {
+    this.value = this.value.replace(/[^0-9]/g, '');
+});
+
+// Only allow numbers in age field
+document.getElementById('age').addEventListener('input', function(e) {
+    this.value = this.value.replace(/[^0-9]/g, '');
+});
+
+// Only allow letters and spaces in name field
+document.getElementById('fullName').addEventListener('input', function(e) {
+    this.value = this.value.replace(/[^a-zA-Z\s]/g, '');
+});
+</script>
+
+</body>
+
+<style>
+.input_field {
+    @apply w-full mt-2 p-3 md:p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-yellow-500 focus:border-transparent outline-none text-sm md:text-base transition-all;
+}
+.label {
+    @apply text-gray-700 text-sm font-medium mt-4 block;
+}
+</style>
+</html>
