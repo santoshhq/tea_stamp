@@ -4,313 +4,208 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chai Rewards • Register</title>
+
+    <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
     <style>
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* Gender Selection Highlight */
+        label:has(input[type="radio"]:checked) {
+            border-color: #d97706 !important;
+            background: #fff7e1 !important;
+            box-shadow: 0 0 12px rgba(217, 151, 6, 0.25);
         }
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateX(-20px); }
-            to { opacity: 1; transform: translateX(0); }
+        input[type="radio"]:checked + i {
+            transform: scale(1.20);
+            color: #d97706 !important;
         }
-        .animate-fade-in {
-            animation: fadeIn 0.6s ease-out;
-        }
-        .animate-slide-in {
-            animation: slideIn 0.5s ease-out;
-        }
-        .input-wrapper {
-            position: relative;
-        }
-        .input-icon {
-            position: absolute;
-            left: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 1.25rem;
-            color: #9ca3af;
-            pointer-events: none;
-        }
-        .input-field-icon {
-            padding-left: 3rem;
-        }
-        .radio-option {
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        .radio-option:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-        .radio-option input:checked ~ .radio-label {
-            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-            color: white;
-            border-color: #f59e0b;
+        input[type="radio"]:checked ~ span {
+            color: #d97706 !important;
+            font-weight: 600;
         }
     </style>
 </head>
 
-<body class="bg-gradient-to-br from-[#fdf7ee] via-[#fff8ef] to-[#f5e6d3] min-h-screen px-4 py-8 md:py-12">
+<body class="bg-[#fcf7f0] min-h-screen flex flex-col items-center px-4 py-10">
 
     <!-- Header -->
-    <div class="max-w-md mx-auto mb-8 animate-fade-in">
-        <div class="text-center mb-6">
-            <div class="w-20 h-20 mx-auto mb-4 rounded-full shadow-xl bg-gradient-to-br from-yellow-500 to-orange-600 flex items-center justify-center text-white text-3xl">
-                <i class="fas fa-mug-hot"></i>
-            </div>
-            <h1 class="text-3xl md:text-4xl font-bold text-[#5a3f2e] mb-2">Join Chai Rewards</h1>
-            <p class="text-sm md:text-base text-gray-600">Create your account and start earning rewards!</p>
+    <div class="w-full max-w-md text-center mb-8">
+        <div class="w-20 h-20 mx-auto bg-gradient-to-br from-orange-500 to-amber-600 
+                    rounded-full flex items-center justify-center text-white text-4xl shadow-md">
+            <i class="fas fa-mug-hot"></i>
         </div>
+
+        <h1 class="text-3xl font-bold text-[#5a3f2e] mt-4">Join Chai Rewards</h1>
+        <p class="text-gray-600 text-sm">Create your account and start earning rewards</p>
     </div>
 
-    <!-- Registration Form -->
-    <div class="max-w-md mx-auto animate-slide-in">
-        <div class="bg-white rounded-3xl shadow-2xl overflow-hidden border border-orange-100">
-            <!-- Form Header -->
-            <div class="bg-gradient-to-r from-yellow-500 to-orange-600 px-6 py-4">
-                <h2 class="text-white font-bold text-lg md:text-xl">Create Your Account</h2>
-                <p class="text-white/90 text-sm">Fill in your details below</p>
+    <!-- Form Card -->
+    <div class="w-full max-w-md bg-white rounded-2xl shadow-xl border border-[#f1ddbe] p-6">
+
+        <h2 class="text-lg font-semibold text-[#5a3f2e] mb-4">Create Your Account</h2>
+
+        <form id="registerForm" onsubmit="handleRegister(event)" class="space-y-5">
+
+            <!-- Name -->
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-1">
+                    Full Name
+                </label>
+                <div class="relative">
+                    <i class="fas fa-user absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                    <input id="fullName"
+                           type="text"
+                           placeholder="Santosh Kumar"
+                           class="w-full pl-12 p-3 rounded-xl border border-gray-300 focus:ring focus:ring-yellow-500 outline-none text-sm">
+                </div>
             </div>
 
-            <!-- Form Content -->
-            <div class="p-6 md:p-8">
-                <form id="registerForm" onsubmit="handleRegister(event)" class="space-y-5">
-                    
-                    <!-- Full Name -->
-                    <div class="space-y-2">
-                        <label class="text-gray-700 text-sm font-semibold flex items-center gap-2">
-                            <i class="fas fa-user"></i> Full Name
-                        </label>
-                        <div class="input-wrapper">
-                            <span class="input-icon"><i class="fas fa-signature"></i></span>
-                            <input 
-                                type="text"
-                                id="fullName"
-                                class="w-full input-field-icon p-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-yellow-500 focus:border-transparent outline-none text-base transition-all"
-                                placeholder="Enter your full name"
-                                required
-                                minlength="2">
-                        </div>
-                    </div>
-
-                    <!-- Mobile Number -->
-                    <div class="space-y-2">
-                        <label class="text-gray-700 text-sm font-semibold flex items-center gap-2">
-                            <i class="fas fa-mobile-alt"></i> Mobile Number
-                        </label>
-                        <div class="input-wrapper">
-                            <span class="input-icon"><i class="fas fa-phone"></i></span>
-                            <input 
-                                type="tel"
-                                id="mobileNumber"
-                                class="w-full input-field-icon p-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-yellow-500 focus:border-transparent outline-none text-base transition-all"
-                                maxlength="10" 
-                                placeholder="9876543210"
-                                required>
-                        </div>
-                        <p class="text-xs text-gray-500 ml-1">Enter 10-digit mobile number</p>
-                    </div>
-
-                    <!-- Age -->
-                    <div class="space-y-2">
-                        <label class="text-gray-700 text-sm font-semibold flex items-center gap-2">
-                            <i class="fas fa-birthday-cake"></i> Age
-                        </label>
-                        <div class="input-wrapper">
-                            <span class="input-icon"><i class="fas fa-hashtag"></i></span>
-                            <input 
-                                type="number" 
-                                id="age"
-                                class="w-full input-field-icon p-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-yellow-500 focus:border-transparent outline-none text-base transition-all"
-                                placeholder="Enter your age"
-                                min="13"
-                                max="120"
-                                required>
-                        </div>
-                        <p class="text-xs text-gray-500 ml-1">Must be 13 years or older</p>
-                    </div>
-
-                    <!-- Gender -->
-                    <div class="space-y-3">
-                        <label class="text-gray-700 text-sm font-semibold flex items-center gap-2">
-                            <i class="fas fa-venus-mars"></i> Gender
-                        </label>
-                        <div class="grid grid-cols-3 gap-3">
-                            <label class="radio-option">
-                                <input type="radio" name="gender" value="Male" class="hidden" required>
-                                <div class="radio-label border-2 border-gray-200 rounded-xl p-4 text-center transition-all">
-                                    <div class="text-2xl mb-1"><i class="fas fa-male"></i></div>
-                                    <div class="text-sm font-semibold">Male</div>
-                                </div>
-                            </label>
-                            <label class="radio-option">
-                                <input type="radio" name="gender" value="Female" class="hidden" required>
-                                <div class="radio-label border-2 border-gray-200 rounded-xl p-4 text-center transition-all">
-                                    <div class="text-2xl mb-1"><i class="fas fa-female"></i></div>
-                                    <div class="text-sm font-semibold">Female</div>
-                                </div>
-                            </label>
-                            <label class="radio-option">
-                                <input type="radio" name="gender" value="Other" class="hidden" required>
-                                <div class="radio-label border-2 border-gray-200 rounded-xl p-4 text-center transition-all">
-                                    <div class="text-2xl mb-1"><i class="fas fa-user"></i></div>
-                                    <div class="text-sm font-semibold">Other</div>
-                                </div>
-                            </label>
-                        </div>
-                    </div>
-
-                    <!-- Error/Success Messages -->
-                    <div id="errorMessage" class="hidden p-4 bg-red-50 border-2 border-red-200 rounded-xl text-red-600 text-sm font-medium"></div>
-                    <div id="successMessage" class="hidden p-4 bg-green-50 border-2 border-green-200 rounded-xl text-green-600 text-sm font-medium"></div>
-
-                    <!-- Submit Button -->
-                    <button
-                        type="submit"
-                        class="w-full mt-6 bg-gradient-to-r from-yellow-600 to-orange-600 hover:from-yellow-700 hover:to-orange-700 text-white py-4 md:py-5 rounded-xl font-bold text-base md:text-lg shadow-lg transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2">
-                        <span>Create Account</span>
-                        <i class="fas fa-arrow-right"></i>
-                    </button>
-
-                    <!-- Login Link -->
-                    <div class="pt-4 border-t border-gray-100">
-                        <p class="text-center text-sm md:text-base text-gray-600">
-                            Already have an account?
-                            <a href="index.html" class="text-yellow-600 font-bold hover:text-orange-600 hover:underline transition-colors">Login Here</a>
-                        </p>
-                    </div>
-                </form>
+            <!-- Mobile -->
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-1">
+                    Mobile Number
+                </label>
+                <div class="relative">
+                    <i class="fas fa-phone absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                    <input id="mobileNumber"
+                           type="tel"
+                           maxlength="10"
+                           placeholder="9876543210"
+                           class="w-full pl-12 p-3 rounded-xl border border-gray-300 focus:ring focus:ring-yellow-500 outline-none text-sm">
+                </div>
+                <p class="text-xs text-gray-500 mt-1">Enter 10-digit mobile number</p>
             </div>
-        </div>
 
-        <!-- Features -->
-        <div class="mt-8 grid grid-cols-3 gap-4 text-center">
-            <div class="bg-white/70 backdrop-blur-sm p-4 rounded-xl shadow-md">
-                <div class="text-2xl mb-1"><i class="fas fa-bolt text-yellow-600"></i></div>
-                <div class="text-xs font-semibold text-gray-700">Quick Signup</div>
+            <!-- Age -->
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-1">
+                    Age
+                </label>
+                <div class="relative">
+                    <i class="fas fa-hashtag absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                    <input id="age"
+                           type="number"
+                           min="13" max="120"
+                           placeholder="18"
+                           class="w-full pl-12 p-3 rounded-xl border border-gray-300 focus:ring focus:ring-yellow-500 outline-none text-sm">
+                </div>
             </div>
-            <div class="bg-white/70 backdrop-blur-sm p-4 rounded-xl shadow-md">
-                <div class="text-2xl mb-1"><i class="fas fa-gift text-green-600"></i></div>
-                <div class="text-xs font-semibold text-gray-700">Free Rewards</div>
+
+            <!-- Gender -->
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                    Gender
+                </label>
+
+                <div class="grid grid-cols-2 gap-3">
+
+                    <!-- Male -->
+                    <label class="flex flex-col items-center p-4 rounded-xl border border-gray-300 cursor-pointer 
+                                   hover:bg-yellow-50 transition-all">
+                        <input type="radio" name="gender" value="Male" class="hidden" required>
+
+                        <i class="fas fa-male text-3xl text-blue-600"></i>
+                        <span class="text-sm mt-2 text-gray-700">Male</span>
+                    </label>
+
+                    <!-- Female -->
+                    <label class="flex flex-col items-center p-4 rounded-xl border border-gray-300 cursor-pointer 
+                                   hover:bg-yellow-50 transition-all">
+                        <input type="radio" name="gender" value="Female" class="hidden" required>
+
+                        <i class="fas fa-female text-3xl text-pink-600"></i>
+                        <span class="text-sm mt-2 text-gray-700">Female</span>
+                    </label>
+
+                </div>
             </div>
-            <div class="bg-white/70 backdrop-blur-sm p-4 rounded-xl shadow-md">
-                <div class="text-2xl mb-1"><i class="fas fa-mobile-alt text-blue-600"></i></div>
-                <div class="text-xs font-semibold text-gray-700">Easy Tracking</div>
-            </div>
-        </div>
+
+            <!-- Error -->
+            <div id="errorMessage"
+                 class="hidden p-3 bg-red-100 border border-red-300 rounded-lg text-red-700 text-sm"></div>
+
+            <div id="successMessage"
+                 class="hidden p-3 bg-green-100 border border-green-300 rounded-lg text-green-700 text-sm"></div>
+
+            <!-- Submit -->
+            <button class="w-full bg-gradient-to-r from-orange-500 to-amber-600 
+                           text-white py-3 rounded-xl font-semibold text-base shadow-md
+                           hover:from-orange-600 hover:to-amber-700 transition">
+                Create Account
+                <i class="fas fa-arrow-right ml-2"></i>
+            </button>
+
+            <!-- Login -->
+            <p class="text-center text-sm text-gray-600 mt-3">
+                Already have an account?
+                <a href="index.html" class="text-yellow-700 font-semibold hover:underline">
+                    Login Here
+                </a>
+            </p>
+
+        </form>
     </div>
 
 <script>
+/* Same logic you already had, but cleaner */
+
 function handleRegister(event) {
     event.preventDefault();
-    
-    const name = document.getElementById('fullName').value.trim();
-    const mobile = document.getElementById('mobileNumber').value.trim();
-    const age = parseInt(document.getElementById('age').value);
-    const genderRadio = document.querySelector('input[name="gender"]:checked');
-    const gender = genderRadio ? genderRadio.value : '';
-    
-    // Validate inputs
-    if (name.length < 2) {
-        showError('Please enter a valid name (at least 2 characters)');
-        return;
-    }
-    
-    if (!/^[6-9]\d{9}$/.test(mobile)) {
-        showError('Please enter a valid 10-digit mobile number starting with 6-9');
-        return;
-    }
-    
-    if (age < 13 || age > 120) {
-        showError('Please enter a valid age between 13 and 120');
-        return;
-    }
-    
-    if (!gender) {
-        showError('Please select your gender');
-        return;
-    }
-    
-    // Check if mobile already exists
-    const users = JSON.parse(localStorage.getItem('users') || '[]');
-    
+
+    const fullName = document.getElementById("fullName").value.trim();
+    const mobile = document.getElementById("mobileNumber").value.trim();
+    const age = parseInt(document.getElementById("age").value);
+    const gender = document.querySelector('input[name="gender"]:checked')?.value;
+
+    if (fullName.length < 2) return showError("Enter a valid name.");
+    if (!/^[6-9]\d{9}$/.test(mobile)) return showError("Enter a valid 10-digit mobile number.");
+    if (age < 13 || age > 120) return showError("Enter a valid age.");
+    if (!gender) return showError("Select your gender.");
+
+    let users = JSON.parse(localStorage.getItem("users") || "[]");
+
     if (users.find(u => u.mobile === mobile)) {
-        showError('This mobile number is already registered. Please login.');
-        setTimeout(() => {
-            window.location.href = 'index.html';
-        }, 2000);
+        showError("Mobile number already registered.");
+        setTimeout(() => window.location.href = "index.html", 2000);
         return;
     }
-    
-    // Create new user
-    const newUser = {
+
+    users.push({
         id: Date.now().toString(),
-        name: name,
+        name: fullName,
         mobile: mobile,
         age: age,
         gender: gender,
         stamps: 0,
-        rewardsEarned: 0,
         history: [],
-        joinedDate: new Date().toISOString()
-    };
-    
-    users.push(newUser);
-    localStorage.setItem('users', JSON.stringify(users));
-    
-    // Show success message
-    showSuccess('Registration successful! Redirecting to login...');
-    
-    // Disable form
-    document.getElementById('registerForm').querySelectorAll('input, select, button').forEach(el => {
-        el.disabled = true;
+        joined: new Date().toISOString()
     });
-    
-    // Redirect to login
-    setTimeout(() => {
-        window.location.href = 'index.html';
-    }, 2000);
+
+    localStorage.setItem("users", JSON.stringify(users));
+
+    showSuccess("Registration successful! Redirecting…");
+    setTimeout(() => window.location.href = "index.html", 2000);
 }
 
-function showError(message) {
-    const errorDiv = document.getElementById('errorMessage');
-    const successDiv = document.getElementById('successMessage');
-    
-    successDiv.classList.add('hidden');
-    errorDiv.textContent = message;
-    errorDiv.classList.remove('hidden');
-    
-    setTimeout(() => {
-        errorDiv.classList.add('hidden');
-    }, 5000);
+function showError(msg) {
+    const e = document.getElementById("errorMessage");
+    const s = document.getElementById("successMessage");
+    s.classList.add("hidden");
+    e.textContent = msg;
+    e.classList.remove("hidden");
 }
 
-function showSuccess(message) {
-    const errorDiv = document.getElementById('errorMessage');
-    const successDiv = document.getElementById('successMessage');
-    
-    errorDiv.classList.add('hidden');
-    successDiv.textContent = message;
-    successDiv.classList.remove('hidden');
+function showSuccess(msg) {
+    const e = document.getElementById("errorMessage");
+    const s = document.getElementById("successMessage");
+    e.classList.add("hidden");
+    s.textContent = msg;
+    s.classList.remove("hidden");
 }
-
-// Only allow numbers in mobile field
-document.getElementById('mobileNumber').addEventListener('input', function(e) {
-    this.value = this.value.replace(/[^0-9]/g, '');
-});
-
-// Only allow numbers in age field
-document.getElementById('age').addEventListener('input', function(e) {
-    this.value = this.value.replace(/[^0-9]/g, '');
-});
-
-// Only allow letters and spaces in name field
-document.getElementById('fullName').addEventListener('input', function(e) {
-    this.value = this.value.replace(/[^a-zA-Z\s]/g, '');
-});
 </script>
+
 </body>
-</html>>
 </html>
